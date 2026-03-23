@@ -1,1 +1,132 @@
 @AGENTS.md
+
+# LawSchoolHero.org — Project Guide
+
+## What This Is
+A Monaco.com-inspired dark luxury marketing site for a **free** law school admissions prep platform. Built with Next.js 16, TypeScript, Tailwind CSS v4, and Framer Motion.
+
+The platform offers four free tools: LSAT Logical Reasoning, LSAT Reading Comprehension, Personal Statement coaching, and Resume Formatting. Tutoring is the paid upsell.
+
+---
+
+## Stack
+
+| Tool | Version / Notes |
+|---|---|
+| Next.js | 16 (App Router, Turbopack) |
+| TypeScript | strict |
+| Tailwind CSS | v4 — no `tailwind.config.ts`, configured via `@theme inline` in `globals.css` |
+| Framer Motion | scroll-reveal animations via `AnimateIn` wrapper |
+| Fonts | Inter (sans, `--font-inter`) + Playfair Display (serif, `--font-cormorant`) |
+| Icons | Lucide React |
+| Utilities | clsx + tailwind-merge → `lib/utils.ts cn()` |
+
+---
+
+## Project Structure
+
+```
+app/
+  layout.tsx        — root layout, fonts (Inter + Playfair Display), metadata
+  page.tsx          — homepage: Nav → Hero → SocialProof → Services → HowItWorks → FinalCTA → Footer
+  globals.css       — @theme inline tokens, fluid CSS vars (--fluid-5xl…--fluid-sm), ticker animation
+
+components/
+  layout/
+    Nav.tsx         — "use client"; floating pill nav (~2/3 page width), all links anchor to page sections
+    Footer.tsx      — multi-column links, copyright
+
+  sections/
+    Hero.tsx        — "use client"; video player (placeholder) + schools ticker overlay + headline + CTA
+    SocialProof.tsx — 4-stat bar (2000+ students, T14, 50pt LSAT gain, Free)
+    Services.tsx    — 4 cards: LR, RC, Personal Statement, Resume
+    HowItWorks.tsx  — 3 numbered steps
+    FinalCTA.tsx    — id="get-started"; serif headline + Get Started Free CTA
+
+  ui/
+    AnimateIn.tsx   — Framer Motion useInView scroll-reveal wrapper (delay, direction, duration props)
+    Button.tsx      — primary/ghost variants, sm/md/lg sizes, href or onClick
+    Divider.tsx     — 1px rgba(255,255,255,0.08) horizontal rule
+
+lib/
+  utils.ts          — cn() helper
+```
+
+---
+
+## Design System
+
+### Colors (inline styles — not Tailwind classes, since v4 doesn't support arbitrary rgba well)
+```
+Background:   #000000
+Surface:      #0a0a0a  (card hover)
+Surface-2:    #111111  (icon bg)
+Nav bg:       #161616
+CTA pill bg:  #2a2a2a
+Border:       rgba(255,255,255,0.08)
+Nav border:   rgba(255,255,255,0.06)
+Text:         #ffffff
+Text-60:      rgba(255,255,255,0.60)
+Text-50:      rgba(255,255,255,0.50)
+Text-25:      rgba(255,255,255,0.25)
+```
+
+### Typography
+- Serif headings: `font-serif` class (Playfair Display) — used for all `<h1>`, `<h2>`, `<h3>`, logo
+- Sans body: default (Inter)
+- Fluid sizes via CSS vars: `var(--fluid-5xl)` → `var(--fluid-sm)` (all `clamp()` based)
+
+### Animations
+- `AnimateIn` component: wraps any element with `useInView` + `motion.div`. Props: `delay`, `direction` (up/down/left/right/none), `duration`.
+- Hero intro: bare `motion.*` with `fadeUp(delay)` helper
+- Ticker: `.animate-ticker` class in `globals.css` — `translateX(-50%)` over 70s, GPU-accelerated with `will-change: transform`
+
+---
+
+## Ticker Implementation (seamless loop)
+
+The ticker in `Hero.tsx` uses two identical copy `<div>`s inside an `inline-flex` animated container.
+Each copy has `gap: 3rem` between items AND `padding-right: 3rem` as the trailing gap.
+
+This guarantees: `translateX(-50%)` = exactly `−width(copy1)` with zero jump at the seam.
+**Do not revert to a single flat array** — that approach has a half-gap discontinuity on loop.
+
+---
+
+## Page Anchors
+
+| Anchor | Section |
+|---|---|
+| `#services` | Services (4 prep tool cards) |
+| `#how-it-works` | HowItWorks (3 steps) |
+| `#get-started` | FinalCTA (signup / tutoring CTA) |
+
+All nav links point to these anchors. There are no dead `href="#"` links in the nav.
+
+---
+
+## Nav Structure
+
+```
+[Prep → #services] [How it works → #how-it-works]   lawschoolhero   [Tutoring → #get-started] [Get Started Free → #get-started]
+```
+
+- Pill width: `w-full md:max-w-[68%]` centered via `flex justify-center` on the outer header
+- Logo: lowercase serif (`font-serif font-normal`), absolutely centered within the pill
+- CTA button: dark pill (`#2a2a2a`, `border-white/10`) — not white — matches Monaco "Request demo" style
+
+---
+
+## Known Placeholders (needs real implementation)
+- `<video>` in `Hero.tsx` has no `src` — add a real video URL when available
+- All `href="#get-started"` CTAs scroll to the bottom section; replace with real auth URL when auth is built
+- Stats in `SocialProof.tsx` ("2,000+ students", "50 pts") are placeholder copy
+
+---
+
+## Key Gotchas
+
+- **Tailwind v4**: Use `@theme inline` in `globals.css`, not a config file. Arbitrary colors often need `style={{}}` props instead of Tailwind classes.
+- **turbopack.root**: Set in `next.config.ts` to avoid workspace root detection warnings.
+- **Serif font variable**: `--font-cormorant` maps to Playfair Display (Cormorant Garant is not available in `next/font/google`).
+- **Server vs Client components**: Sections are Server Components by default. Add `"use client"` only when using hooks or event handlers. `Nav.tsx` and `Hero.tsx` are client components.

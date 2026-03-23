@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-cormorant);
+
+  --color-background: #000000;
+  --color-surface: #0a0a0a;
+  --color-surface-2: #111111;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-text-muted: rgba(255, 255, 255, 0.25);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --fluid-5xl: clamp(3rem, 8vw, 7rem);
+  --fluid-4xl: clamp(2.25rem, 5vw, 4.5rem);
+  --fluid-3xl: clamp(1.875rem, 3.5vw, 3rem);
+  --fluid-2xl: clamp(1.5rem, 2.5vw, 2.25rem);
+  --fluid-xl: clamp(1.25rem, 2vw, 1.875rem);
+  --fluid-lg: clamp(1.125rem, 1.5vw, 1.5rem);
+  --fluid-base: clamp(1rem, 1.2vw, 1.125rem);
+  --fluid-sm: clamp(0.875rem, 1vw, 1rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-serif {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+
+.fluid-5xl { font-size: var(--fluid-5xl); }
+.fluid-4xl { font-size: var(--fluid-4xl); }
+.fluid-3xl { font-size: var(--fluid-3xl); }
+.fluid-2xl { font-size: var(--fluid-2xl); }
+.fluid-xl  { font-size: var(--fluid-xl); }
+.fluid-lg  { font-size: var(--fluid-lg); }
+.fluid-base { font-size: var(--fluid-base); }
+.fluid-sm  { font-size: var(--fluid-sm); }
+
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-ticker {
+  animation: ticker 70s linear infinite;
+  will-change: transform;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
 }
