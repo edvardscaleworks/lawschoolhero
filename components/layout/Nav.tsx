@@ -1,11 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [authed, setAuthed] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setAuthed(!!session);
+    });
+  }, []);
+
+  const ctaHref = authed ? "/dashboard" : "/sign-in";
 
   return (
     <>
@@ -62,7 +73,7 @@ export default function Nav() {
               Tutoring
             </Link>
             <Link
-              href="#get-started"
+              href={ctaHref}
               className="text-sm font-medium text-white rounded-full px-5 py-2 border transition-all"
               style={{
                 backgroundColor: "#2a2a2a",
@@ -128,7 +139,7 @@ export default function Nav() {
               style={{ borderColor: "rgba(255,255,255,0.08)" }}
             >
               <Link
-                href="#get-started"
+                href={ctaHref}
                 className="block text-sm font-medium text-white rounded-full px-5 py-2.5 text-center border"
                 style={{ backgroundColor: "#2a2a2a", borderColor: "rgba(255,255,255,0.1)" }}
                 onClick={() => setMobileOpen(false)}
