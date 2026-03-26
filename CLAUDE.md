@@ -1,6 +1,23 @@
 @AGENTS.md
 
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # LawSchoolHero.org — Project Guide
+
+## Commands
+
+```bash
+npm run dev      # start dev server (Turbopack, http://localhost:3000)
+npm run build    # production build
+npm run start    # serve production build
+npm run lint     # ESLint
+```
+
+No test suite exists yet.
+
+---
 
 ## What This Is
 A Monaco.com-inspired dark luxury marketing site for a **free** law school admissions prep platform. Built with Next.js 16, TypeScript, Tailwind CSS v4, and Framer Motion.
@@ -81,25 +98,32 @@ lib/
 
 ## Design System
 
-### Colors (inline styles — not Tailwind classes, since v4 doesn't support arbitrary rgba well)
+### Colors
+
+The following are registered in `@theme inline` in `globals.css` and work as Tailwind classes:
+
+| Token | Value | Tailwind class examples |
+|---|---|---|
+| `--color-background` | `#000000` | `bg-background` |
+| `--color-surface` | `#0a0a0a` | `bg-surface` |
+| `--color-surface-2` | `#111111` | `bg-surface-2` |
+| `--color-border` | `rgba(255,255,255,0.08)` | `border-border` |
+| `--color-text` | `#ffffff` | `text-text` |
+| `--color-text-secondary` | `rgba(255,255,255,0.6)` | `text-text-secondary` |
+| `--color-text-muted` | `rgba(255,255,255,0.25)` | `text-text-muted` |
+
+Values **not** in the theme (use `style={{}}` for these):
 ```
-Background:   #000000
-Surface:      #0a0a0a  (card hover)
-Surface-2:    #111111  (icon bg)
 Nav bg:       #161616
 CTA pill bg:  #2a2a2a
-Border:       rgba(255,255,255,0.08)
 Nav border:   rgba(255,255,255,0.06)
-Text:         #ffffff
-Text-60:      rgba(255,255,255,0.60)
 Text-50:      rgba(255,255,255,0.50)
-Text-25:      rgba(255,255,255,0.25)
 ```
 
 ### Typography
 - Serif headings: `font-serif` class (Playfair Display) — used for all `<h1>`, `<h2>`, `<h3>`, logo
 - Sans body: default (Inter)
-- Fluid sizes via CSS vars: `var(--fluid-5xl)` → `var(--fluid-sm)` (all `clamp()` based)
+- Fluid sizes: use the utility classes `fluid-5xl` → `fluid-sm` (defined in `globals.css`, backed by `clamp()` vars). Both the class and the CSS var (`var(--fluid-5xl)`) are available.
 
 ### Animations
 - `AnimateIn` component: wraps any element with `useInView` + `motion.div`. Props: `delay`, `direction` (up/down/left/right/none), `duration`.
