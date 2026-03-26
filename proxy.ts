@@ -30,7 +30,16 @@ export async function proxy(request: NextRequest) {
   );
 
   // Refresh session — do not add logic between createServerClient and getUser
-  await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const { pathname } = request.nextUrl;
+  const isAuthPage = pathname.startsWith("/sign-in") || pathname.startsWith("/auth/confirm");
+
+  if (user && isAuthPage) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
 
   return supabaseResponse;
 }
