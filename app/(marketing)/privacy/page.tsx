@@ -36,11 +36,11 @@ export default function PrivacyPage() {
             <p>
               Questions about this policy? Email us at{" "}
               <a
-                href="mailto:privacy@lawschoolhero.org"
+                href="mailto:info@lawschoolhero.org"
                 className="underline underline-offset-4 hover:opacity-80 transition-opacity"
                 style={{ color: "rgba(255,255,255,0.9)" }}
               >
-                privacy@lawschoolhero.org
+                info@lawschoolhero.org
               </a>
               .
             </p>
@@ -142,7 +142,7 @@ export default function PrivacyPage() {
           <Part title="7. Marketing Communications">
             <p>
               You may opt out of marketing emails at any time by clicking "Unsubscribe" in
-              any marketing email or emailing us at privacy@lawschoolhero.org. You will
+              any marketing email or emailing us at info@lawschoolhero.org. You will
               still receive transactional emails necessary to operate your account (e.g.,
               sign-in links).
             </p>
@@ -154,7 +154,7 @@ export default function PrivacyPage() {
               delete, or export your personal data. California residents may have
               additional rights under the CCPA, including the right to know what personal
               information we collect and to request deletion. To exercise any of these
-              rights, contact us at privacy@lawschoolhero.org.
+              rights, contact us at info@lawschoolhero.org.
             </p>
           </Part>
 
@@ -180,7 +180,7 @@ export default function PrivacyPage() {
             <p>
               Nordgrowth Partners LLC d/b/a LawSchoolHero
               <br />
-              privacy@lawschoolhero.org
+              info@lawschoolhero.org
             </p>
           </Part>
         </div>

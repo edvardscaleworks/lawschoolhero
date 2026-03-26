@@ -76,11 +76,11 @@ export default function TermsPage() {
               confidentiality of your account and for all activity that occurs under it.
               Notify us immediately at{" "}
               <a
-                href="mailto:hello@lawschoolhero.org"
+                href="mailto:info@lawschoolhero.org"
                 className="underline underline-offset-4 hover:opacity-80 transition-opacity"
                 style={{ color: "rgba(255,255,255,0.9)" }}
               >
-                hello@lawschoolhero.org
+                info@lawschoolhero.org
               </a>{" "}
               if you suspect unauthorized access to your account.
             </p>
@@ -206,7 +206,7 @@ export default function TermsPage() {
             <p>
               Nordgrowth Partners LLC d/b/a LawSchoolHero
               <br />
-              hello@lawschoolhero.org
+              info@lawschoolhero.org
             </p>
           </Part>
         </div>
