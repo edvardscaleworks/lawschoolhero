@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="text-white font-semibold text-lg">
-              LawSchoolHero
+              lawschoolhero
             </Link>
             <p className="mt-3 text-white/40 text-sm leading-relaxed max-w-xs">
               The definitive law school admissions advantage. Free forever.
@@ -60,7 +60,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/25 text-xs">
-            &copy; {new Date().getFullYear()} LawSchoolHero. All rights reserved.
+            &copy; {new Date().getFullYear()} lawschoolhero. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <Link href="/coming-soon" className="text-white/25 hover:text-white/60 text-xs transition-colors">

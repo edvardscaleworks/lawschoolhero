@@ -5,7 +5,7 @@ const steps = [
     number: "01",
     title: "Create your free account",
     description:
-      "Sign up in seconds. No credit card, no trial period, no catch. LawSchoolHero is free because we believe a great legal education should not depend on your ability to pay for prep.",
+      "Sign up in seconds. No credit card, no trial period, no catch. lawschoolhero is free because we believe a great legal education should not depend on your ability to pay for prep.",
   },
   {
     number: "02",

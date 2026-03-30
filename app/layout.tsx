@@ -17,7 +17,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "LawSchoolHero — The Definitive Law School Admissions Advantage",
+  title: "lawschoolhero — The Definitive Law School Admissions Advantage",
   description:
     "Free LSAT prep, personal statement coaching, and resume formatting for law school applicants. Master logical reasoning, reading comprehension, and craft your story.",
   keywords: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "law school resume",
   ],
   openGraph: {
-    title: "LawSchoolHero — The Definitive Law School Admissions Advantage",
+    title: "lawschoolhero — The Definitive Law School Admissions Advantage",
     description:
       "Free tools and guidance for LSAT mastery, personal statements, and everything in between.",
     type: "website",

@@ -2,7 +2,7 @@ import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 
 export const metadata = {
-  title: "Privacy Policy — LawSchoolHero",
+  title: "Privacy Policy — lawschoolhero",
 };
 
 export default function PrivacyPage() {

@@ -2,7 +2,7 @@ import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 
 export const metadata = {
-  title: "Terms of Service — LawSchoolHero",
+  title: "Terms of Service — lawschoolhero",
 };
 
 export default function TermsPage() {
