@@ -2,10 +2,10 @@ import Divider from "@/components/ui/Divider";
 import AnimateIn from "@/components/ui/AnimateIn";
 
 const stats = [
-  { value: "2,000+", label: "students helped" },
-  { value: "T14", label: "school acceptances" },
-  { value: "50 pts", label: "average LSAT gain" },
-  { value: "Free", label: "forever, always" },
+  { value: "172", label: "average LSAT" },
+  { value: "T14", label: "admits only as tutors" },
+  { value: "Full-Service", label: "" },
+  { value: "Free", label: "learning. forever, always." },
 ];
 
 export default function SocialProof() {

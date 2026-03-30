@@ -12,26 +12,12 @@ const fadeUp = (delay: number) => ({
 });
 
 const schools = [
-  "Harvard Law",
-  "Yale Law",
-  "Stanford Law",
-  "Columbia Law",
   "Georgetown Law",
-  "UVA School of Law",
+  "Columbia Law",
+  "Stanford Law",
   "NYU School of Law",
+  "UVA School of Law",
   "Duke Law",
-  "Cornell Law",
-  "Northwestern Pritzker",
-  "UC Berkeley Law",
-  "University of Michigan Law",
-  "Penn Carey Law",
-  "Vanderbilt Law",
-  "Notre Dame Law",
-  "Washington & Lee Law",
-  "Emory Law",
-  "Boston University Law",
-  "Fordham Law",
-  "USC Gould",
 ];
 
 // Each copy div uses gap + matching padding-right so the loop seam is gapless
@@ -49,6 +35,71 @@ export default function Hero() {
   return (
     <section className="bg-black pt-28 md:pt-32 pb-0">
       <div className="max-w-5xl mx-auto px-4 md:px-8">
+        {/* ─── Schools ticker (above video) ─── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-4"
+        >
+          {/* Label */}
+          <p
+            className="text-center uppercase font-medium mb-3"
+            style={{
+              color: "rgba(255,255,255,0.28)",
+              fontSize: "0.65rem",
+              letterSpacing: "0.14em",
+            }}
+          >
+            Used by students admitted to
+          </p>
+
+          {/* Overflow mask */}
+          <div className="relative overflow-hidden">
+            {/* Left edge fade */}
+            <div
+              className="absolute left-0 top-0 bottom-0 w-16 md:w-24 z-10 pointer-events-none"
+              style={{
+                background: "linear-gradient(to right, #000 0%, transparent 100%)",
+              }}
+            />
+            {/* Right edge fade */}
+            <div
+              className="absolute right-0 top-0 bottom-0 w-16 md:w-24 z-10 pointer-events-none"
+              style={{
+                background: "linear-gradient(to left, #000 0%, transparent 100%)",
+              }}
+            />
+
+            <div className="animate-ticker" style={{ display: "inline-flex" }}>
+              {/* Copy 1 */}
+              <div style={{ display: "flex", gap: GAP, paddingRight: GAP, flexShrink: 0 }}>
+                {schools.map((school) => (
+                  <span
+                    key={school}
+                    className="font-serif font-normal select-none whitespace-nowrap"
+                    style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.9rem" }}
+                  >
+                    {school}
+                  </span>
+                ))}
+              </div>
+              {/* Copy 2 */}
+              <div style={{ display: "flex", gap: GAP, paddingRight: GAP, flexShrink: 0 }}>
+                {schools.map((school) => (
+                  <span
+                    key={`${school}-2`}
+                    className="font-serif font-normal select-none whitespace-nowrap"
+                    style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.9rem" }}
+                  >
+                    {school}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* ─── Video player ─── */}
         <motion.div
           initial={{ opacity: 0, y: 32, scale: 0.98 }}
@@ -110,107 +161,6 @@ export default function Hero() {
               </div>
             </button>
           )}
-
-          {/* ─── Schools ticker overlay (bottom of video) ─── */}
-          <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
-            {/* Gradient fade from video to ticker band */}
-            <div
-              style={{
-                height: "5rem",
-                background:
-                  "linear-gradient(to bottom, transparent, rgba(5,5,5,0.92))",
-              }}
-            />
-            {/* Ticker band */}
-            <div style={{ backgroundColor: "rgba(5,5,5,0.92)", paddingBottom: "1.25rem" }}>
-              {/* Label */}
-              <p
-                className="text-center uppercase font-medium mb-3"
-                style={{
-                  color: "rgba(255,255,255,0.28)",
-                  fontSize: "0.65rem",
-                  letterSpacing: "0.14em",
-                }}
-              >
-                Used by students admitted to
-              </p>
-
-              {/* Overflow mask */}
-              <div className="relative overflow-hidden">
-                {/* Left edge fade */}
-                <div
-                  className="absolute left-0 top-0 bottom-0 w-16 md:w-24 z-10 pointer-events-none"
-                  style={{
-                    background:
-                      "linear-gradient(to right, rgba(5,5,5,0.92) 0%, transparent 100%)",
-                  }}
-                />
-                {/* Right edge fade */}
-                <div
-                  className="absolute right-0 top-0 bottom-0 w-16 md:w-24 z-10 pointer-events-none"
-                  style={{
-                    background:
-                      "linear-gradient(to left, rgba(5,5,5,0.92) 0%, transparent 100%)",
-                  }}
-                />
-
-                {/*
-                  Two-copy seamless ticker.
-                  Each copy: display:flex + gap + matching padding-right as trailing gap.
-                  Outer inline-flex animates translateX(-50%) = exactly -width(copy1). ✓
-                */}
-                <div
-                  className="animate-ticker"
-                  style={{ display: "inline-flex" }}
-                >
-                  {/* Copy 1 */}
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: GAP,
-                      paddingRight: GAP,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {schools.map((school) => (
-                      <span
-                        key={school}
-                        className="font-serif font-normal select-none whitespace-nowrap"
-                        style={{
-                          color: "rgba(255,255,255,0.38)",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        {school}
-                      </span>
-                    ))}
-                  </div>
-                  {/* Copy 2 — identical, creates the seamless loop */}
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: GAP,
-                      paddingRight: GAP,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {schools.map((school) => (
-                      <span
-                        key={`${school}-2`}
-                        className="font-serif font-normal select-none whitespace-nowrap"
-                        style={{
-                          color: "rgba(255,255,255,0.38)",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        {school}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </motion.div>
 
         {/* ─── Text below video ─── */}

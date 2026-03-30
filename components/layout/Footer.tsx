@@ -3,15 +3,15 @@ import Divider from "@/components/ui/Divider";
 
 const links = {
   Services: [
-    { label: "Logical Reasoning", href: "#" },
-    { label: "Reading Comprehension", href: "#" },
-    { label: "Personal Statement", href: "#" },
-    { label: "Resume Formatting", href: "#" },
+    { label: "Logical Reasoning", href: "/coming-soon" },
+    { label: "Reading Comprehension", href: "/coming-soon" },
+    { label: "Personal Statement", href: "/coming-soon" },
+    { label: "Resume Formatting", href: "/coming-soon" },
   ],
   Company: [
-    { label: "About", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Contact", href: "#" },
+    { label: "About", href: "/coming-soon" },
+    { label: "Blog", href: "/coming-soon" },
+    { label: "Contact", href: "/coming-soon" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "/privacy" },
@@ -63,13 +63,13 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} LawSchoolHero. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="text-white/25 hover:text-white/60 text-xs transition-colors">
+            <Link href="/coming-soon" className="text-white/25 hover:text-white/60 text-xs transition-colors">
               Twitter
             </Link>
-            <Link href="#" className="text-white/25 hover:text-white/60 text-xs transition-colors">
+            <Link href="/coming-soon" className="text-white/25 hover:text-white/60 text-xs transition-colors">
               Instagram
             </Link>
-            <Link href="#" className="text-white/25 hover:text-white/60 text-xs transition-colors">
+            <Link href="/coming-soon" className="text-white/25 hover:text-white/60 text-xs transition-colors">
               LinkedIn
             </Link>
           </div>
