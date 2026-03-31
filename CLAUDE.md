@@ -37,7 +37,8 @@ The platform offers four free tools: LSAT Logical Reasoning, LSAT Reading Compre
 | Fonts | Inter (sans, `--font-inter`) + Playfair Display (serif, `--font-cormorant`) |
 | Icons | Lucide React |
 | Utilities | clsx + tailwind-merge → `lib/utils.ts cn()` |
-| Supabase | Auth (magic link + Google OAuth) via `@supabase/ssr`; Postgres DB for future modules |
+| Supabase | Auth (magic link + Google OAuth) via `@supabase/ssr`; Postgres DB for waitlist + future modules |
+| Resend | Transactional emails (waitlist confirmation + admin notification) via `lib/resend.ts` |
 
 ---
 
@@ -64,9 +65,16 @@ app/
       page.tsx            — "You're in." + user email + sign out
       SignOutButton.tsx    — "use client"
 
+  (marketing)/
+    waitlist/
+      page.tsx            — Server Component: metadata + trust signals + WaitlistForm
+      WaitlistForm.tsx    — "use client"; email capture form, success/error states, Framer Motion
+
   api/
     auth/callback/
       route.ts            — PKCE code exchange → redirect /dashboard
+    waitlist/
+      route.ts            — POST: validate → Supabase insert → Resend emails → { position }
 
 proxy.ts                  — Supabase session refresh; guards against missing env vars
 
@@ -89,6 +97,7 @@ components/
 
 lib/
   utils.ts                — cn() helper
+  resend.ts               — lazy Resend singleton (getResend()), server-only
   supabase/
     client.ts             — createBrowserClient() for Client Components
     server.ts             — createServerClient() for Server Components + Route Handlers
@@ -145,6 +154,8 @@ Text-50:      rgba(255,255,255,0.50)
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+RESEND_API_KEY=re_...              # server-only — used by /api/waitlist
+ADMIN_EMAIL=your@email.com         # server-only — receives waitlist notifications
 ```
 
 ### Supabase Dashboard Config Required
@@ -154,6 +165,28 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
   - `https://lawschoolhero.vercel.app/api/auth/callback`
   - `https://lawschoolhero.org/api/auth/callback`
 - Site URL set to `https://lawschoolhero.org`
+
+---
+
+## Waitlist (`/waitlist`)
+
+Standalone page — NOT linked from homepage CTAs. Users reach it via direct URL.
+
+### Flow
+1. User submits email (+ optional first name) on `/waitlist`
+2. `POST /api/waitlist` validates, inserts into `waitlist_signups` via anon key
+3. RLS: `anon_insert_waitlist` policy allows INSERT; count via `get_waitlist_count()` SECURITY DEFINER function
+4. Resend sends branded confirmation email to user + plain-text admin notification
+5. Form shows animated success state with waitlist position number
+
+### Supabase table: `waitlist_signups`
+- `id` (uuid PK), `email` (text, unique index on LOWER), `first_name` (text), `source` (text, default 'waitlist_page'), `created_at` (timestamptz)
+- RLS enabled, anon INSERT policy, no SELECT policy (count via RPC only)
+
+### Resend
+- From: `info@lawschoolhero.org` (domain must be verified in Resend dashboard)
+- `lib/resend.ts` exports `getResend()` — lazy init to avoid build-time crashes when env var is missing
+- Email failures are non-blocking (`Promise.allSettled`) — signup is saved regardless
 
 ---
 
@@ -193,8 +226,8 @@ All nav links point to these anchors. There are no dead `href="#"` links in the 
 
 ## Known Placeholders (needs real implementation)
 - `<video>` in `Hero.tsx` has no `src` — add a real video URL when available
-- Stats in `SocialProof.tsx` ("2,000+ students", "50 pts") are placeholder copy
 - Dashboard is a stub ("You're in.") — modules (LSAT, PS, Resume) not yet built
+- Homepage CTAs (`Hero.tsx`, `FinalCTA.tsx`) still point to `href="#"` — wire these when ready
 
 ---
 
